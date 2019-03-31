@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: etl-streaming-config
+data:
+  PROVIDER_URI: "https://mainnet.infura.io"
+  GCS_BUCKET: "your-bucket"
+  PUB_SUB_TOPIC_PREFIX: "projects/your-project/topics/crypto_ethereum"
+  CHAIN: "ethereum"
+  LAG_BLOCKS: "13"
+  MAX_WORKERS: "4"
