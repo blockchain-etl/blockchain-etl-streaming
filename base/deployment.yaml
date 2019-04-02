@@ -44,7 +44,7 @@ spec:
             memory: "128Mi"
             cpu: "100m"
       containers:
-      - name: streaming
+      - name: stream
         image: blockchainetl/ethereum-etl:1.0-streaming
         args:
           - "stream"
