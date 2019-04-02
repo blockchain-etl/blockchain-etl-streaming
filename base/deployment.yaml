@@ -21,7 +21,7 @@ spec:
         command:
         - gsutil
         - cp
-        - gs://$(GCS_BUCKET)/$(CHAIN)-etl/streaming/last_synced_block.txt
+        - $(GCS_PREFIX)/last_synced_block.txt
         - /var/ethereum-etl/last_synced_block.txt
         volumeMounts:
         - name: google-cloud-key
@@ -31,16 +31,11 @@ spec:
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /var/secrets/google/key.json
-        - name: GCS_BUCKET
+        - name: GCS_PREFIX
           valueFrom:
             configMapKeyRef:
               name: etl-streaming-config
-              key: GCS_BUCKET
-        - name: CHAIN
-          valueFrom:
-            configMapKeyRef:
-              name: etl-streaming-config
-              key: CHAIN
+              key: GCS_PREFIX
         resources:
           requests:
             memory: "64Mi"
@@ -49,19 +44,18 @@ spec:
             memory: "128Mi"
             cpu: "100m"
       containers:
-      - name: ethereum-etl-streaming
+      - name: streaming
         image: blockchainetl/ethereum-etl:1.0-streaming
         args:
           - "stream"
           - "--provider-uri=$(PROVIDER_URI)"
           - "--last-synced-block-file=/var/ethereum-etl/last_synced_block.txt"
           - "--output=$(PUB_SUB_TOPIC_PREFIX)"
-          - "--chain=$(CHAIN)"
           - "--lag=$(LAG_BLOCKS)"
           - "--max-workers=$(MAX_WORKERS)"
           - "--batch-size=10"
           - "--block-batch-size=1"
-          - "-e=block"
+          - "--entity-types=$(ENTITY_TYPES)"
         volumeMounts:
         - name: google-cloud-key
           mountPath: /var/secrets/google
@@ -80,11 +74,6 @@ spec:
             configMapKeyRef:
               name: etl-streaming-config
               key: PUB_SUB_TOPIC_PREFIX
-        - name: CHAIN
-          valueFrom:
-            configMapKeyRef:
-              name: etl-streaming-config
-              key: CHAIN
         - name: LAG_BLOCKS
           valueFrom:
             configMapKeyRef:
@@ -95,6 +84,11 @@ spec:
             configMapKeyRef:
               name: etl-streaming-config
               key: MAX_WORKERS
+        - name: ENTITY_TYPES
+          valueFrom:
+            configMapKeyRef:
+              name: etl-streaming-config
+              key: ENTITY_TYPES
         livenessProbe:
           exec:
             command:
@@ -126,7 +120,7 @@ spec:
         - gsutil
         - cp
         - /var/ethereum-etl/last_synced_block.txt
-        - gs://$(GCS_BUCKET)/$(CHAIN)-etl/streaming/last_synced_block.txt
+        - $(GCS_PREFIX)/last_synced_block.txt
         volumeMounts:
         - name: google-cloud-key
           mountPath: /var/secrets/google
@@ -135,23 +129,18 @@ spec:
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /var/secrets/google/key.json
-        - name: GCS_BUCKET
+        - name: GCS_PREFIX
           valueFrom:
             configMapKeyRef:
               name: etl-streaming-config
-              key: GCS_BUCKET
-        - name: CHAIN
-          valueFrom:
-            configMapKeyRef:
-              name: etl-streaming-config
-              key: CHAIN
+              key: GCS_PREFIX
         lifecycle:
           preStop:
             exec:
               command:
               - /bin/sh
               - -c
-              - gsutil cp /var/ethereum-etl/last_synced_block.txt gs://${GCS_BUCKET}/${CHAIN}-etl/streaming/last_synced_block.txt
+              - gsutil cp /var/ethereum-etl/last_synced_block.txt ${GCS_PREFIX}/last_synced_block.txt
         resources:
           requests:
             memory: "64Mi"

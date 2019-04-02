@@ -10,6 +10,8 @@ gcloud container clusters create ethereum-etl-streaming \
 --num-nodes 1 \
 --disk-size 10GB \
 --machine-type custom-2-4096 \
+--network default \
+--subnetwork default \
 --scopes pubsub,storage-rw,logging-write,monitoring-write,service-management,service-control,trace
 ```
 
@@ -33,7 +35,7 @@ Put the prefix to `overlays/ethereum/configMap.yaml`, `PUB_SUB_TOPIC_PREFIX` pro
 
 4. Create GCS bucket. Upload a text file with block number you want to start streaming from to 
 `gs:/<your-bucket>/ethereum-etl/streaming/last_synced_block.txt`.
-Put your bucket name to `base/configMap.yaml`, `GCS_BUCKET` property.
+Put your GCS path to `base/configMap.yaml`, `GCS_PREFIX` property, e.g. `gs:/<your-bucket>/ethereum-etl-streaming`.
 
 5. Update `overlays/ethereum/configMap.yaml`, `PROVIDER_URI` property to point to your Ethereum node.
 

@@ -1,7 +1,0 @@
-namePrefix: ethereum-
-commonLabels:
-  chain: ethereum
-bases:
-- ../../base
-patchesStrategicMerge:
-- configMap.yaml

@@ -1,0 +1,7 @@
+namePrefix: ethereum-block-data-
+commonLabels:
+  rootEntityType: block
+bases:
+- ../../../base
+patchesStrategicMerge:
+- configMap.yaml

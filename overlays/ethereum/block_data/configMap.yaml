@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: etl-streaming-config
+data:
+  ENTITY_TYPES: "block,transaction,log,token_transfer"
+  GCS_PREFIX: "gs://your-bucket/block-data-etl"

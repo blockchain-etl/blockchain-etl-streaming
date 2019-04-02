@@ -1,0 +1,7 @@
+namePrefix: ethereum-trace-data-
+commonLabels:
+  rootEntityType: trace
+bases:
+- ../../../base
+patchesStrategicMerge:
+- configMap.yaml
