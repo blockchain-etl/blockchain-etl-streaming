@@ -4,11 +4,14 @@ metadata:
   name: etl-streaming
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: etl-streaming
     spec:
+      terminationGracePeriodSeconds: 30
       volumes:
       - name: google-cloud-key
         secret:
@@ -24,13 +27,9 @@ spec:
         - $(GCS_PREFIX)/last_synced_block.txt
         - /var/ethereum-etl/last_synced_block.txt
         volumeMounts:
-        - name: google-cloud-key
-          mountPath: /var/secrets/google
         - name: last-synced-block
           mountPath: /var/ethereum-etl
         env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /var/secrets/google/key.json
         - name: GCS_PREFIX
           valueFrom:
             configMapKeyRef:
@@ -56,6 +55,7 @@ spec:
           - "--batch-size=10"
           - "--block-batch-size=1"
           - "--entity-types=$(ENTITY_TYPES)"
+          - "--pid-file=/var/ethereum-etl/stream.pid"
         volumeMounts:
         - name: google-cloud-key
           mountPath: /var/secrets/google
@@ -112,7 +112,7 @@ spec:
             memory: "512Mi"
             cpu: "350m"
       - name: upload-last-synced-block-file
-        image: google/cloud-sdk:220.0.0-alpine
+        image: google/cloud-sdk:241.0.0-alpine
         command:
         - watch
         - "-n"
@@ -122,13 +122,9 @@ spec:
         - /var/ethereum-etl/last_synced_block.txt
         - $(GCS_PREFIX)/last_synced_block.txt
         volumeMounts:
-        - name: google-cloud-key
-          mountPath: /var/secrets/google
         - name: last-synced-block
           mountPath: /var/ethereum-etl
         env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /var/secrets/google/key.json
         - name: GCS_PREFIX
           valueFrom:
             configMapKeyRef:
@@ -140,7 +136,8 @@ spec:
               command:
               - /bin/sh
               - -c
-              - gsutil cp /var/ethereum-etl/last_synced_block.txt ${GCS_PREFIX}/last_synced_block.txt
+              - "while [ -f /var/ethereum-etl/stream.pid ]; do sleep 1; done;
+              gsutil cp /var/ethereum-etl/last_synced_block.txt ${GCS_PREFIX}/last_synced_block.txt"
         resources:
           requests:
             memory: "64Mi"
