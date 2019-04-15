@@ -1,6 +1,25 @@
-# Ethereum ETL Streaming
+# Blockchain ETL Streaming
 
-Streams blocks and transactions to a Pub/Sub topic.
+Streams the following Ethereum entities to Pub/Sub using 
+[ethereum-etl stream](https://github.com/blockchain-etl/ethereum-etl#stream):
+
+- blocks
+- transactions
+- logs
+- token_transfers 
+- traces
+- contracts
+- tokens
+
+Streams blocks and transactions to Pub/Sub using 
+[bitcoin-etl stream](https://github.com/blockchain-etl/bitcoin-etl#stream). Supported chains:
+
+- bitcoin
+- bitcoin_cash
+- dogecoin
+- litecoin
+- dash
+- zcash
 
 1. Create a cluster:
 
@@ -31,13 +50,13 @@ gcloud container clusters get-credentials ethereum-etl-streaming \
   - "crypto_ethereum.contracts" 
   - "crypto_ethereum.tokens" 
 
-Put the prefix to `overlays/ethereum/configMap.yaml`, `PUB_SUB_TOPIC_PREFIX` property.
+Put the prefix to `ethereum_base/configMap.yaml`, `PUB_SUB_TOPIC_PREFIX` property.
 
 4. Create GCS bucket. Upload a text file with block number you want to start streaming from to 
 `gs:/<your-bucket>/ethereum-etl/streaming/last_synced_block.txt`.
-Put your GCS path to `base/configMap.yaml`, `GCS_PREFIX` property, e.g. `gs:/<your-bucket>/ethereum-etl-streaming`.
+Put your GCS path to `overlays/ethereum/block_data/configMap.yaml`, `GCS_PREFIX` property, e.g. `gs:/<your-bucket>/block-data-etl`.
 
-5. Update `overlays/ethereum/configMap.yaml`, `PROVIDER_URI` property to point to your Ethereum node.
+5. Update `ethereum_base/configMap.yaml`, `PROVIDER_URI` property to point to your Ethereum node.
 
 5. Create "ethereum-etl-app" service account with roles:
     - Pub/Sub Editor
