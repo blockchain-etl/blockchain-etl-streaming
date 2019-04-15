@@ -1,0 +1,7 @@
+commonLabels:
+  base: bitcoin_base
+bases:
+- ../base
+patchesStrategicMerge:
+- deployment.yaml
+- configMap.yaml

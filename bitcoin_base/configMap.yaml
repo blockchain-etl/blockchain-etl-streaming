@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: streaming-app-config
+data:
+  PROVIDER_URI: "http://user:pass@localhost:8332"
+  LAG_BLOCKS: "2"
+  MAX_WORKERS: "4"

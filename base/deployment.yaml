@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: etl-streaming
+  name: streaming-app-deployment
 spec:
   replicas: 1
   strategy:
@@ -15,7 +15,7 @@ spec:
       volumes:
       - name: google-cloud-key
         secret:
-          secretName: ethereum-etl-app-key
+          secretName: streaming-app-key
       - name: last-synced-block
         emptyDir: {}
       initContainers:
@@ -25,15 +25,15 @@ spec:
         - gsutil
         - cp
         - $(GCS_PREFIX)/last_synced_block.txt
-        - /var/ethereum-etl/last_synced_block.txt
+        - /var/blockchain-etl/last_synced_block.txt
         volumeMounts:
         - name: last-synced-block
-          mountPath: /var/ethereum-etl
+          mountPath: /var/blockchain-etl
         env:
         - name: GCS_PREFIX
           valueFrom:
             configMapKeyRef:
-              name: etl-streaming-config
+              name: streaming-app-config
               key: GCS_PREFIX
         resources:
           requests:
@@ -44,60 +44,23 @@ spec:
             cpu: "100m"
       containers:
       - name: stream
-        image: blockchainetl/ethereum-etl:1.3.0-streaming
-        args:
-          - "stream"
-          - "--provider-uri=$(PROVIDER_URI)"
-          - "--last-synced-block-file=/var/ethereum-etl/last_synced_block.txt"
-          - "--output=$(PUB_SUB_TOPIC_PREFIX)"
-          - "--lag=$(LAG_BLOCKS)"
-          - "--max-workers=$(MAX_WORKERS)"
-          - "--batch-size=10"
-          - "--block-batch-size=1"
-          - "--entity-types=$(ENTITY_TYPES)"
-          - "--pid-file=/var/ethereum-etl/stream.pid"
         volumeMounts:
         - name: google-cloud-key
           mountPath: /var/secrets/google
         - name: last-synced-block
-          mountPath: /var/ethereum-etl
+          mountPath: /var/blockchain-etl
         env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /var/secrets/google/key.json
-        - name: PROVIDER_URI
-          valueFrom:
-            configMapKeyRef:
-              name: etl-streaming-config
-              key: PROVIDER_URI
-        - name: PUB_SUB_TOPIC_PREFIX
-          valueFrom:
-            configMapKeyRef:
-              name: etl-streaming-config
-              key: PUB_SUB_TOPIC_PREFIX
-        - name: LAG_BLOCKS
-          valueFrom:
-            configMapKeyRef:
-              name: etl-streaming-config
-              key: LAG_BLOCKS
-        - name: MAX_WORKERS
-          valueFrom:
-            configMapKeyRef:
-              name: etl-streaming-config
-              key: MAX_WORKERS
-        - name: ENTITY_TYPES
-          valueFrom:
-            configMapKeyRef:
-              name: etl-streaming-config
-              key: ENTITY_TYPES
+        - name: LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS
+          value: 600
         livenessProbe:
           exec:
             command:
             - /bin/sh
             - -c
-            - "file=/var/ethereum-etl/last_synced_block.txt;
+            - "file=/var/blockchain-etl/last_synced_block.txt;
             if [ ! -f $file ]; then echo \"File $file does not exist\" && exit 1; fi;
             file_age=$(($(date +%s) - $(date -r $file +%s)));
-            max_age=600;
+            max_age=${LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS};
             echo \"$file age is $file_age seconds. Max healthy age is $max_age seconds\";
             if [ $file_age -lt $max_age ]; then exit 0; else exit 1; fi"
           initialDelaySeconds: 300
@@ -119,16 +82,16 @@ spec:
         - "60"
         - gsutil
         - cp
-        - /var/ethereum-etl/last_synced_block.txt
+        - /var/blockchain-etl/last_synced_block.txt
         - $(GCS_PREFIX)/last_synced_block.txt
         volumeMounts:
         - name: last-synced-block
-          mountPath: /var/ethereum-etl
+          mountPath: /var/blockchain-etl
         env:
         - name: GCS_PREFIX
           valueFrom:
             configMapKeyRef:
-              name: etl-streaming-config
+              name: streaming-app-config
               key: GCS_PREFIX
         lifecycle:
           preStop:
@@ -136,8 +99,8 @@ spec:
               command:
               - /bin/sh
               - -c
-              - "while [ -f /var/ethereum-etl/stream.pid ]; do sleep 1; done;
-              gsutil cp /var/ethereum-etl/last_synced_block.txt ${GCS_PREFIX}/last_synced_block.txt"
+              - "while [ -f /var/blockchain-etl/stream.pid ]; do sleep 1; done;
+              gsutil cp /var/blockchain-etl/last_synced_block.txt ${GCS_PREFIX}/last_synced_block.txt"
         resources:
           requests:
             memory: "64Mi"

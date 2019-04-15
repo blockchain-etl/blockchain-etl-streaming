@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: streaming-app-config
 data:
+  PROVIDER_URI: "https://mainnet.infura.io"
   ENTITY_TYPES: "block,transaction,log,token_transfer"
-  GCS_PREFIX: "gs://your-bucket/block-data-etl"

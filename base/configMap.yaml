@@ -1,11 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: etl-streaming-config
+  name: streaming-app-config
 data:
-  PROVIDER_URI: "https://mainnet.infura.io"
-  PUB_SUB_TOPIC_PREFIX: "projects/crypto-etl-ethereum-dev/topics/crypto_ethereum"
-  GCS_PREFIX: "gs://your-bucket/ethereum-etl-streaming"
+  PUB_SUB_TOPIC_PREFIX: "projects/<your-project>/topics/crypto_ethereum"
+  GCS_PREFIX: "gs://<your-bucket>/ethereum-etl-streaming"
   LAG_BLOCKS: "10"
   MAX_WORKERS: "4"
-  ENTITY_TYPES: "block,transaction,log,token_transfer,trace,contract,token"
