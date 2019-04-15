@@ -21,6 +21,8 @@ Streams blocks and transactions to Pub/Sub using
 - dash
 - zcash
 
+## Deployment Instructions
+
 1. Create a cluster:
 
 ```bash
@@ -54,7 +56,8 @@ Put the prefix to `ethereum_base/configMap.yaml`, `PUB_SUB_TOPIC_PREFIX` propert
 
 4. Create GCS bucket. Upload a text file with block number you want to start streaming from to 
 `gs:/<your-bucket>/ethereum-etl/streaming/last_synced_block.txt`.
-Put your GCS path to `overlays/ethereum/block_data/configMap.yaml`, `GCS_PREFIX` property, e.g. `gs:/<your-bucket>/block-data-etl`.
+Put your GCS path to `overlays/ethereum/block_data/configMap.yaml`, `GCS_PREFIX` property, 
+e.g. `gs:/<your-bucket>/ethereum-etl/streaming`.
 
 5. Update `ethereum_base/configMap.yaml`, `PROVIDER_URI` property to point to your Ethereum node.
 
