@@ -48,5 +48,5 @@ spec:
               name: streaming-app-config
               key: ENTITY_TYPES
         - name: LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS
-          value: 300
+          value: "600"
 

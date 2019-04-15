@@ -51,7 +51,7 @@ spec:
           mountPath: /var/blockchain-etl
         env:
         - name: LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS
-          value: 600
+          value: "600"
         livenessProbe:
           exec:
             command:

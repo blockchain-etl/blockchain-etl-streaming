@@ -48,7 +48,7 @@ spec:
               name: streaming-app-config
               key: MAX_WORKERS
         - name: LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS
-          value: 7200
+          value: "7200"
         livenessProbe:
           initialDelaySeconds: 600
           periodSeconds: 600
