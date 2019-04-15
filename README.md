@@ -58,7 +58,7 @@ brew install kustomize
 Create the application:
 
 ```bash
-kustomize build overlays/ethereum | kubectl apply -f -
+kustomize build overlays/ethereum/block_data | kubectl apply -f -
 ```
 
 7. To troubleshoot:
