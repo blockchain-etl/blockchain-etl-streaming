@@ -1,0 +1,7 @@
+namePrefix: zcash-
+commonLabels:
+  chain: zcash
+bases:
+- ../../bitcoin_base
+patchesStrategicMerge:
+- configMap.yaml

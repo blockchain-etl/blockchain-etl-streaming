@@ -1,0 +1,7 @@
+namePrefix: litecoin-
+commonLabels:
+  chain: litecoin
+bases:
+- ../../bitcoin_base
+patchesStrategicMerge:
+- configMap.yaml

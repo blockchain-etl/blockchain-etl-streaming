@@ -1,0 +1,7 @@
+namePrefix: dash-
+commonLabels:
+  chain: dash
+bases:
+- ../../bitcoin_base
+patchesStrategicMerge:
+- configMap.yaml

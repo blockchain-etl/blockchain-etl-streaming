@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: streaming-app-config
+data:
+  PROVIDER_URI: "http://user:pass@localhost:8332"
+  GCS_PREFIX: "gs://<your-bucket>/litecoin-etl/streaming"
+  PUB_SUB_TOPIC_PREFIX: "projects/<your-project>/topics/crypto_litecoin"
+  CHAIN: "litecoin"
+
