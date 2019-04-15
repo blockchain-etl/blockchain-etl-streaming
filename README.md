@@ -74,11 +74,25 @@ kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downl
 brew install kustomize
 ```
 
-Create the application:
+Create the Kubernetes deployment:
 
 ```bash
 kustomize build overlays/ethereum/block_data | kubectl apply -f -
 ```
+
+Fill out the values for remainig configMap.yaml files in `overlays`, then create the deployments:
+
+```bash
+kustomize build overlays/ethereum/trace_data | kubectl apply -f -
+kustomize build overlays/bitcoin | kubectl apply -f -
+kustomize build overlays/bitcoin_cash | kubectl apply -f -
+kustomize build overlays/dogecoin | kubectl apply -f -
+kustomize build overlays/litecoin | kubectl apply -f -
+kustomize build overlays/dash | kubectl apply -f -
+kustomize build overlays/zcash | kubectl apply -f -
+```
+
+Ethereum block and trace data streaming are decoupled for higher reliability. 
 
 7. To troubleshoot:
 
