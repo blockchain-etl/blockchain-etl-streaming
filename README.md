@@ -46,7 +46,7 @@ Put your GCS path to `base/configMap.yaml`, `GCS_PREFIX` property, e.g. `gs:/<yo
 Download the key. Create a Kubernetes secret:
 
 ```bash
-kubectl create secret generic ethereum-etl-app-key --from-file=key.json=$HOME/Downloads/key.json
+kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downloads/key.json
 ```
 
 6. Install kustomize https://github.com/kubernetes-sigs/kustomize/blob/master/docs/INSTALL.md. 

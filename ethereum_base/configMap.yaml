@@ -4,4 +4,5 @@ metadata:
   name: streaming-app-config
 data:
   PROVIDER_URI: "https://mainnet.infura.io"
+  PUB_SUB_TOPIC_PREFIX: "projects/<your-project>/topics/crypto_ethereum"
   ENTITY_TYPES: "block,transaction,log,token_transfer"
