@@ -1,7 +1,0 @@
-namePrefix: dogecoin-
-commonLabels:
-  chain: dogecoin
-bases:
-- ../../bitcoin_base
-patchesStrategicMerge:
-- configMap.yaml

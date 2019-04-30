@@ -87,12 +87,12 @@ Fill out the values for remainig configMap.yaml files in `overlays`, then create
 
 ```bash
 kustomize build overlays/ethereum/trace_data | kubectl apply -f -
-kustomize build overlays/bitcoin | kubectl apply -f -
-kustomize build overlays/bitcoin_cash | kubectl apply -f -
-kustomize build overlays/dogecoin | kubectl apply -f -
-kustomize build overlays/litecoin | kubectl apply -f -
-kustomize build overlays/dash | kubectl apply -f -
-kustomize build overlays/zcash | kubectl apply -f -
+kustomize build overlays/bitcoin/bitcoin | kubectl apply -f -
+kustomize build overlays/bitcoin/bitcoin_cash | kubectl apply -f -
+kustomize build overlays/bitcoin/dogecoin | kubectl apply -f -
+kustomize build overlays/bitcoin/litecoin | kubectl apply -f -
+kustomize build overlays/bitcoin/dash | kubectl apply -f -
+kustomize build overlays/bitcoin/zcash | kubectl apply -f -
 ```
 
 Ethereum block and trace data streaming are decoupled for higher reliability. 

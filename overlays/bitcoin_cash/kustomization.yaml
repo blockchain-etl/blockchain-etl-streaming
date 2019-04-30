@@ -1,7 +1,0 @@
-namePrefix: bitcoin-cash-
-commonLabels:
-  chain: bitcoin_cash
-bases:
-- ../../bitcoin_base
-patchesStrategicMerge:
-- configMap.yaml

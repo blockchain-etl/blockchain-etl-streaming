@@ -1,7 +1,0 @@
-namePrefix: bitcoin-
-commonLabels:
-  chain: bitcoin
-bases:
-- ../../bitcoin_base
-patchesStrategicMerge:
-- configMap.yaml

@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: streaming-app-config
-data:
-  PROVIDER_URI: "http://user:pass@localhost:8332"
-  GCS_PREFIX: "gs://<your-bucket>/zcash-etl/streaming"
-  PUB_SUB_TOPIC_PREFIX: "projects/<your-project>/topics/crypto_zcash"
-  CHAIN: "zcash"

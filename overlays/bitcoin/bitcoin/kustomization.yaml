@@ -1,0 +1,14 @@
+namePrefix: bitcoin-
+commonLabels:
+  chain: bitcoin
+bases:
+- ../../../bitcoin_base
+configMapGenerator:
+- name: streaming-app-config
+  behavior: merge
+  literals:
+    - PROVIDER_URI=http://user:pass@localhost:8332
+    - GCS_PREFIX=gs://<your-bucket>/bitcoin-etl/streaming
+    - PUB_SUB_TOPIC_PREFIX=projects/<your-project>/topics/crypto_bitcoin
+    - LAG_BLOCKS=3
+    - CHAIN=bitcoin
