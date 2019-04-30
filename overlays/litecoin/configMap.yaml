@@ -6,5 +6,6 @@ data:
   PROVIDER_URI: "http://user:pass@localhost:8332"
   GCS_PREFIX: "gs://<your-bucket>/litecoin-etl/streaming"
   PUB_SUB_TOPIC_PREFIX: "projects/<your-project>/topics/crypto_litecoin"
+  LAG_BLOCKS: "12"
   CHAIN: "litecoin"
 
