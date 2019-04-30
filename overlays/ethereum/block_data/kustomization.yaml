@@ -3,5 +3,11 @@ commonLabels:
   rootEntityType: block
 bases:
 - ../../../ethereum_base
-patchesStrategicMerge:
-- configMap.yaml
+configMapGenerator:
+- name: streaming-app-config
+  behavior: merge
+  literals:
+    - PROVIDER_URI=https://mainnet.infura.io
+    - PUB_SUB_TOPIC_PREFIX=projects/<your-project>/topics/crypto_ethereum
+    - ENTITY_TYPES=block,transaction,log,token_transfer
+    - GCS_PREFIX=gs://<your-bucket>/block-data-etl

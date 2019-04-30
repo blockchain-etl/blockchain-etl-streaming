@@ -3,5 +3,11 @@ commonLabels:
   rootEntityType: trace
 bases:
 - ../../../ethereum_base
-patchesStrategicMerge:
-- configMap.yaml
+configMapGenerator:
+- name: streaming-app-config
+  behavior: merge
+  literals:
+    - PROVIDER_URI=https://mainnet.infura.io
+    - PUB_SUB_TOPIC_PREFIX=projects/<your-project>/topics/crypto_ethereum
+    - ENTITY_TYPES=trace,contract,token
+    - GCS_PREFIX=gs://<your-bucket>/trace-data-etl

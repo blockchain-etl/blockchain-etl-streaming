@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: streaming-app-config
-data:
-  ENTITY_TYPES: "trace,contract,token"
-  GCS_PREFIX: "gs://your-bucket/trace-data-etl"
