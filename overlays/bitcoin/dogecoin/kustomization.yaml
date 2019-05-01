@@ -10,5 +10,5 @@ configMapGenerator:
     - PROVIDER_URI=http://user:pass@localhost:8332
     - GCS_PREFIX=gs://<your-bucket>/bitcoin_cash-etl/streaming
     - PUB_SUB_TOPIC_PREFIX=projects/<your-project>/topics/crypto_bitcoin_cash
-    - LAG_BLOCKS=3
+    - LAG_BLOCKS=60
     - CHAIN=bitcoin_cash
