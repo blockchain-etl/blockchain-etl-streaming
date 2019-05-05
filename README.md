@@ -43,7 +43,7 @@ gcloud container clusters get-credentials ethereum-etl-streaming \
 --zone us-central1-a
 ```
 
-3. Create Pub/Sub topics 
+3. Create Pub/Sub topics (use `create_pubsub_topics_ethereum.sh`)
   - "crypto_ethereum.blocks" 
   - "crypto_ethereum.transactions" 
   - "crypto_ethereum.token_transfers" 
@@ -106,3 +106,6 @@ Ethereum block and trace data streaming are decoupled for higher reliability.
 kubectl describe pods
 kubectl describe node [NODE_NAME]
 ```
+
+Refer to [blockchain-etl-dataflow](https://github.com/blockchain-etl/blockchain-etl-dataflow)
+for connecting Pub/Sub to BigQuery.
