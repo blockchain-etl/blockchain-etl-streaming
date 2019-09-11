@@ -22,31 +22,9 @@ spec:
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /var/secrets/google/key.json
-        - name: PROVIDER_URI
-          valueFrom:
-            configMapKeyRef:
-              name: streaming-app-config
-              key: PROVIDER_URI
-        - name: PUB_SUB_TOPIC_PREFIX
-          valueFrom:
-            configMapKeyRef:
-              name: streaming-app-config
-              key: PUB_SUB_TOPIC_PREFIX
-        - name: LAG_BLOCKS
-          valueFrom:
-            configMapKeyRef:
-              name: streaming-app-config
-              key: LAG_BLOCKS
-        - name: MAX_WORKERS
-          valueFrom:
-            configMapKeyRef:
-              name: streaming-app-config
-              key: MAX_WORKERS
-        - name: ENTITY_TYPES
-          valueFrom:
-            configMapKeyRef:
-              name: streaming-app-config
-              key: ENTITY_TYPES
         - name: LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS
           value: "600"
+        envFrom:
+          - configMapRef:
+              name: streaming-app-config
 
