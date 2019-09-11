@@ -4,6 +4,6 @@ metadata:
   name: streaming-app-config
 data:
   PUB_SUB_TOPIC_PREFIX: "projects/<your-project>/topics/crypto_ethereum"
-  GCS_PREFIX: "gs://<your-bucket>/ethereum-etl-streaming"
+  GCS_PREFIX: "gs://<your-bucket>/ethereum-etl/streaming"
   LAG_BLOCKS: "10"
   MAX_WORKERS: "4"
