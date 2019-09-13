@@ -63,7 +63,7 @@ e.g. `gs:/<your-bucket>/ethereum-etl/streaming`.
 
 5. Create "ethereum-etl-app" service account with roles:
     - Pub/Sub Editor
-    - Storage Object Creator
+    - Storage Object Admin
 
 Download the key. Create a Kubernetes secret:
 
