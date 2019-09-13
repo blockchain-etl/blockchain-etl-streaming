@@ -85,6 +85,8 @@ spec:
         - /var/blockchain-etl/last_synced_block.txt
         - $(GCS_PREFIX)/last_synced_block.txt
         volumeMounts:
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
         - name: last-synced-block
           mountPath: /var/blockchain-etl
         env:
@@ -93,7 +95,15 @@ spec:
             configMapKeyRef:
               name: streaming-app-config
               key: GCS_PREFIX
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
         lifecycle:
+          postStart:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}"
           preStop:
             exec:
               command:
