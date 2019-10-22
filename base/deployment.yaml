@@ -20,7 +20,7 @@ spec:
         emptyDir: {}
       initContainers:
       - name: download-last-synced-block-file
-        image: google/cloud-sdk:220.0.0-alpine
+        image: google/cloud-sdk:264.0.0-alpine
         command:
         - gsutil
         - cp
@@ -75,7 +75,7 @@ spec:
             memory: "512Mi"
             cpu: "350m"
       - name: upload-last-synced-block-file
-        image: google/cloud-sdk:241.0.0-alpine
+        image: google/cloud-sdk:264.0.0-alpine
         command:
         - watch
         - "-n"
