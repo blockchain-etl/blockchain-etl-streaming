@@ -20,13 +20,8 @@ spec:
           - "--block-batch-size=1"
           - "--pid-file=/var/blockchain-etl/stream.pid"
         env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /var/secrets/google/key.json
         - name: LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS
           value: "7200"
-        envFrom:
-          - configMapRef:
-              name: streaming-app-config
         livenessProbe:
           initialDelaySeconds: 600
           periodSeconds: 600
