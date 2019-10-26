@@ -21,6 +21,9 @@ spec:
         {{- if .Values.config.CHAIN }}
         chain: {{ .Values.config.CHAIN }}
         {{- end }}
+        {{- if .Values.config.ROOT_ENTITY_TYPE }}
+        rootEntitiType: {{ .Values.config.ROOT_ENTITY_TYPE }}
+        {{- end }}
     spec:
       terminationGracePeriodSeconds: 30
       volumes:

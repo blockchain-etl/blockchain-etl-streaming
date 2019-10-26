@@ -12,6 +12,7 @@ config:
   MAX_WORKERS: "4"
   ENTITY_TYPES: ""
   CHAIN: "bitcoin"
+  ROOT_ENTITY_TYPE: "" # "block", "trace"
 
 lsb_file: last_synced_block.txt
 lsb_path: /var/blockchain-etl
