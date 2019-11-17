@@ -1,0 +1,6 @@
+config:
+  LAG_BLOCKS: 6
+  CHAIN: bitcoin_cash
+  PROVIDER_URI: http://rpcuser:rpcpassword@bch0-service.bch-0.svc.cluster.local:8332
+  GCS_PREFIX: gs://<YOUR_BUCKET_HERE>/bitcoin_cash-etl/streaming
+  PUB_SUB_TOPIC_PREFIX: projects/<YOUR_PROJECT_HERE>/topics/crypto_bitcoin_cash
