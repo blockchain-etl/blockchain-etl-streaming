@@ -1,0 +1,4 @@
+stream:
+  image:
+    repository: blockchainetl/ethereum-etl
+    tag: 1.3.2-streaming
