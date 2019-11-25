@@ -1,0 +1,8 @@
+bases:
+- ../../eos/block_data
+configMapGenerator:
+- name: streaming-app-config
+  behavior: merge
+  literals:
+    - PUB_SUB_TOPIC_PREFIX=projects/blockchain-etl/topics/crypto_eos
+    - GCS_PREFIX=gs://eos-etl-streaming/eos/block-data

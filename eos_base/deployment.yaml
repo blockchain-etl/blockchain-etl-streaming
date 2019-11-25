@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: streaming-app-deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: stream
+        image: blockchainetl/eos-etl:1.0.0-streaming
+        imagePullPolicy: IfNotPresent
+        args:
+          - "stream"
+          - "--provider-uri=$(PROVIDER_URI)"
+          - "--last-synced-block-file=/var/blockchain-etl/last_synced_block.txt"
+          - "--output=$(PUB_SUB_TOPIC_PREFIX)"
+          - "--lag=$(LAG_BLOCKS)"
+          - "--max-workers=$(MAX_WORKERS)"
+          - "--batch-size=1"
+          - "--block-batch-size=100"
+          - "--pid-file=/var/blockchain-etl/stream.pid"
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
+        - name: LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS
+          value: "600"
+        envFrom:
+          - configMapRef:
+              name: streaming-app-config
+
