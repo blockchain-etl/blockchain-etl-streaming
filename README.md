@@ -75,7 +75,8 @@ kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downl
 
 ```bash
 brew install helm
-helm init
+helm init  
+bash patch-tiller.sh
 ```
 7. Copy [example values](example_values) directory to `values` dir and adjust all the files at least with your bucket and project ID.
 8. Install ETL apps via helm using chart from this repo and values we adjust on previous step, for example:
