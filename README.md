@@ -55,15 +55,15 @@ gcloud container clusters get-credentials ethereum-etl-streaming \
 Put the prefix to `ethereum_base/configMap.yaml`, `PUB_SUB_TOPIC_PREFIX` property.
 
 4. Create GCS bucket. Upload a text file with block number you want to start streaming from to 
-`gs:/<your-bucket>/ethereum-etl/streaming/last_synced_block.txt`.
+`gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming/last_synced_block.txt`.
 Put your GCS path to `overlays/ethereum/block_data/configMap.yaml`, `GCS_PREFIX` property, 
-e.g. `gs:/<your-bucket>/ethereum-etl/streaming`.
+e.g. `gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming`.
 
 5. Update `ethereum_base/configMap.yaml`, `PROVIDER_URI` property to point to your Ethereum node.
 
 5. Create "ethereum-etl-app" service account with roles:
     - Pub/Sub Editor
-    - Storage Object Creator
+    - Storage Object Admin
 
 Download the key. Create a Kubernetes secret:
 
@@ -71,39 +71,31 @@ Download the key. Create a Kubernetes secret:
 kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downloads/key.json
 ```
 
-6. Install kustomize https://github.com/kubernetes-sigs/kustomize/blob/master/docs/INSTALL.md. 
+6. Install [helm] (https://github.com/helm/helm#install) 
 
 ```bash
-brew install kustomize
+brew install helm
+helm init
 ```
-
-Create the Kubernetes deployment:
-
+7. Copy [example values](example_values) directory to `values` dir and adjust all the files at least with your bucket and project ID.
+8. Install ETL apps via helm using chart from this repo and values we adjust on previous step, for example:
 ```bash
-ETHEREUM_OVERLAYS=overlays/ethereum
-kustomize build $ETHEREUM_OVERLAYS/block_data | kubectl apply -f - && \
-kustomize build $ETHEREUM_OVERLAYS/trace_data | kubectl apply -f -
-```
+helm install --name btc --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin/values.yaml
+helm install --name bch --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/bitcoin_cash/values.yaml
+helm install --name dash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/dash/values.yaml
+helm install --name dogecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/dogecoin/values.yaml
+helm install --name litecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values.yaml
+helm install --name zcash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/zcash/values.yaml
 
-Fill out the values for remaining config values in `kustomization.yaml` files in `overlays`, 
-then create the deployments:
-
-```bash
-BITCOIN_OVERLAYS=overlays/bitcoin
-kustomize build $BITCOIN_OVERLAYS/bitcoin | kubectl apply -f - && \
-kustomize build $BITCOIN_OVERLAYS/bitcoin_cash | kubectl apply -f - && \
-kustomize build $BITCOIN_OVERLAYS/dogecoin | kubectl apply -f - && \
-kustomize build $BITCOIN_OVERLAYS/litecoin | kubectl apply -f - && \
-kustomize build $BITCOIN_OVERLAYS/dash | kubectl apply -f - && \
-kustomize build $BITCOIN_OVERLAYS/zcash | kubectl apply -f -
-```
-
+helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
+helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml
+``` 
 Ethereum block and trace data streaming are decoupled for higher reliability. 
 
-7. To troubleshoot:
+9. Use `describe` command to troubleshoot, f.e. :
 
 ```bash
-kubectl describe pods
+kubectl describe pods -n btc
 kubectl describe node [NODE_NAME]
 ```
 
