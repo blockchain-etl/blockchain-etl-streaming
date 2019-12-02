@@ -87,8 +87,12 @@ helm install --name dogecoin --namespace btc charts/blockchain-etl-streaming --v
 helm install --name litecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values.yaml
 helm install --name zcash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/zcash/values.yaml
 
-helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
-helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml
+helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming \ 
+--values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
+helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming \ 
+--values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
+
+helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml
 ``` 
 Ethereum block and trace data streaming are decoupled for higher reliability. 
 
