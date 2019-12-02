@@ -100,13 +100,6 @@ kustomize build $BITCOIN_OVERLAYS/zcash | kubectl apply -f -
 
 Ethereum block and trace data streaming are decoupled for higher reliability. 
 
-Create deployments for EOS streaming:
-
-```bash
-EOS_OVERLAYS=overlays/eos
-kustomize build $EOS_OVERLAYS/block_data | kubectl apply -f -
-```
-
 7. To troubleshoot:
 
 ```bash

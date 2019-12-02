@@ -1,7 +1,0 @@
-commonLabels:
-  rootEntityType: block
-bases:
-- ../base
-patchesStrategicMerge:
-- deployment.yaml
-- configMap.yaml
