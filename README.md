@@ -68,7 +68,7 @@ e.g. `gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming`.
 Download the key. Create a Kubernetes secret:
 
 ```bash
-kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downloads/key.json
+kubectl create secret generic streaming-app-key --namespace eth --from-file=key.json=$HOME/Downloads/key.json
 ```
 
 6. Install [helm] (https://github.com/helm/helm#install) 
