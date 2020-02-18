@@ -8,7 +8,7 @@ steps:
       - GCS_PLUGIN_VERSION=0.2.2
       - HELMFILE_VERSION=v0.85.3
       - HELM_REPO_NAME=$_HELM_REPO_NAME
-      - HELM_REPO_URL=gs://artifacts-$PROJECT_ID/charts
+      - HELM_REPO_URL=$_HELM_REPO_URL
 
   - name: '${_REGISTRY}/$PROJECT_ID/helm'
     args:
