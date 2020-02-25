@@ -92,6 +92,17 @@ spec:
             - "--block-batch-size=1"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
             {{- end }}
+            {{- if eq .Values.stream.image.repository "blockchainetl/eos-etl" }}
+            - "stream"
+            - "--provider-uri={{ .Values.config.PROVIDER_URI }}"
+            - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
+            - "--output={{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
+            - "--lag={{ .Values.config.LAG_BLOCKS }}"
+            - "--max-workers={{ .Values.config.MAX_WORKERS }}"
+            - "--batch-size=1"
+            - "--block-batch-size=100"
+            - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
+            {{- end }}
             {{- if eq .Values.stream.image.repository "blockchainetl/ethereum-etl" }}
             - "stream"
             - "--provider-uri={{ .Values.config.PROVIDER_URI }}"

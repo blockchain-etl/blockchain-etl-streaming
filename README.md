@@ -68,14 +68,15 @@ e.g. `gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming`.
 Download the key. Create a Kubernetes secret:
 
 ```bash
-kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downloads/key.json
+kubectl create secret generic streaming-app-key --namespace eth --from-file=key.json=$HOME/Downloads/key.json
 ```
 
 6. Install [helm] (https://github.com/helm/helm#install) 
 
 ```bash
 brew install helm
-helm init
+helm init  
+bash patch-tiller.sh
 ```
 7. Copy [example values](example_values) directory to `values` dir and adjust all the files at least with your bucket and project ID.
 8. Install ETL apps via helm using chart from this repo and values we adjust on previous step, for example:
@@ -87,8 +88,12 @@ helm install --name dogecoin --namespace btc charts/blockchain-etl-streaming --v
 helm install --name litecoin --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/litecoin/values.yaml
 helm install --name zcash --namespace btc charts/blockchain-etl-streaming --values values/bitcoin/zcash/values.yaml
 
-helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
-helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming --values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml
+helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming \ 
+--values values/ethereum/values.yaml --values values/ethereum/block_data/values.yaml
+helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming \ 
+--values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
+
+helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml
 ``` 
 Ethereum block and trace data streaming are decoupled for higher reliability. 
 

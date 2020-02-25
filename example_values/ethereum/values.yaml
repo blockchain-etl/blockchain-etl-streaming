@@ -2,3 +2,7 @@ stream:
   image:
     repository: blockchainetl/ethereum-etl
     tag: 1.3.2-streaming
+config:
+  PROVIDER_URI: https://mainnet.infura.io
+  ENTITY_TYPES: block,transaction,log,token_transfer
+  LAG_BLOCKS: 18
