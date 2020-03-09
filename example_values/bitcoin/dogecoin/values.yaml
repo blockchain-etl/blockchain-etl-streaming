@@ -3,4 +3,4 @@ config:
   CHAIN: dogecoin
   PROVIDER_URI: http://rpcuser:rpcpassword@doge0-service.doge-0.svc.cluster.local:8332
   GCS_PREFIX: gs://<YOUR_BUCKET_HERE>/dogecoin-etl/streaming
-  PUB_SUB_TOPIC_PREFIX: projects/<YOUR_PROJECT_HERE>/topics/crypto_dogecoin
+  STREAM_OUTPUT: projects/<YOUR_PROJECT_HERE>/topics/crypto_dogecoin
