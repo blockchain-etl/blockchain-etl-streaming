@@ -43,7 +43,7 @@ gcloud container clusters get-credentials ethereum-etl-streaming \
 --zone us-central1-a
 ```
 
-3. Create Pub/Sub topics (use `create_pubsub_topics_ethereum.sh`)
+3. Create Pub/Sub topics (use `create_pubsub_topics_ethereum.sh`). Skip this step if you need to stream to Postgres.
   - "crypto_ethereum.blocks" 
   - "crypto_ethereum.transactions" 
   - "crypto_ethereum.token_transfers" 
@@ -98,6 +98,8 @@ To stream to Postgres:
 helm install --name eth-postgres --namespace eth charts/blockchain-etl-streaming \ 
 --values values/ethereum/values-postgres.yaml
 ``` 
+
+Refer to https://github.com/blockchain-etl/ethereum-etl-postgres for table schema and initial data load.
 
 9. Use `describe` command to troubleshoot, f.e.:
 
