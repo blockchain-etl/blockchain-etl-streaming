@@ -10,4 +10,4 @@ config:
   LAG_BLOCKS: 18
 cloudSqlProxy:
   enabled: true
-  instanceConnectionName: "<your_gcp_project_id>:us-contral1:<cloud_sql_instance_id>"
+  instanceConnectionName: "<your_gcp_project_id>:us-central1:<cloud_sql_instance_id>"
