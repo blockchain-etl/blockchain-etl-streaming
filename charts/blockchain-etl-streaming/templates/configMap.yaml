@@ -6,7 +6,7 @@ metadata:
 {{ include "blockchain-etl-streaming.labels" . | indent 4 }}
 data:
   PROVIDER_URI: "{{ .Values.config.PROVIDER_URI }}"
-  PUB_SUB_TOPIC_PREFIX: "{{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
+  STREAM_OUTPUT: "{{ .Values.config.STREAM_OUTPUT }}"
   GCS_PREFIX: "{{ .Values.config.GCS_PREFIX }}"
   LAG_BLOCKS: "{{ .Values.config.LAG_BLOCKS }}"
   MAX_WORKERS: "{{ .Values.config.MAX_WORKERS }}"

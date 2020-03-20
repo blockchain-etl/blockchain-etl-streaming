@@ -6,7 +6,7 @@ replicaCount: 1
 
 config:
   PROVIDER_URI: "http://user:pass@localhost:8332"
-  PUB_SUB_TOPIC_PREFIX: "projects/<your-project>/topics/crypto_ethereum"
+  STREAM_OUTPUT: "projects/<your-project>/topics/crypto_ethereum"
   GCS_PREFIX: "gs://<your-bucket>/ethereum-etl/streaming"
   LAG_BLOCKS: "10"
   MAX_WORKERS: "4"
@@ -52,6 +52,22 @@ upload:
   image:
     repository: google/cloud-sdk
     tag: 264.0.0-alpine
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+
+cloudSqlProxy:
+  enabled: false
+  instanceConnectionName: "project_id:region:cloud_sql_instance_name"
+  port: 5432
+  image:
+    repository: gcr.io/cloudsql-docker/gce-proxy
+    tag: 1.14
     pullPolicy: IfNotPresent
   resources:
     requests:

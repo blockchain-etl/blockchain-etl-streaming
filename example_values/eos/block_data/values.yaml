@@ -7,6 +7,6 @@ config:
   LAG_BLOCKS: 0
   MAX_WORKERS: 10
   PROVIDER_URI: http://api.main.alohaeos.com
-  PUB_SUB_TOPIC_PREFIX: projects/<YOUR_PROJECT_HERE>/topics/crypto_eos
+  STREAM_OUTPUT: projects/<YOUR_PROJECT_HERE>/topics/crypto_eos
   ROOT_ENTITY_TYPE: block
   GCS_PREFIX: gs://<YOUR_BUCKET_HERE>/eos-etl/streaming
