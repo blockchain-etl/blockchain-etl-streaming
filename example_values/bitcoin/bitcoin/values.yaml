@@ -8,3 +8,6 @@ config:
 stream:
   env:
     LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS: "2400"
+  livenessProbe:
+    initialDelaySeconds: "1200"
+    periodSeconds: "1200"
