@@ -5,10 +5,10 @@ steps:
       - charts/$_CHART_NAME
     id: 'helm package'
     env:
-      - GCS_PLUGIN_VERSION=0.2.1
+      - GCS_PLUGIN_VERSION=0.2.2
       - HELMFILE_VERSION=v0.85.3
       - HELM_REPO_NAME=$_HELM_REPO_NAME
-      - HELM_REPO_URL=gs://artifacts-$PROJECT_ID/charts
+      - HELM_REPO_URL=$_HELM_REPO_URL
 
   - name: '${_REGISTRY}/$PROJECT_ID/helm'
     args:
@@ -33,17 +33,25 @@ steps:
       - helm gcs push ${_CHART_NAME}-$(cat $_ARTIFACT_FILENAME).tgz $_HELM_REPO_NAME
     id: 'helm push'
 
+  # disable caching on repo index, https://github.com/helm/helm/issues/2453#issuecomment-301904742
+  - name: gcr.io/cloud-builders/gsutil
+    args:
+      - setmeta
+      - -h
+      - "Cache-Control:private, max-age=0, no-transform"
+      - ${_HELM_REPO_URL}/index.yaml
+
 substitutions:
   _REGISTRY: gcr.io
   _ENV: dev
   _CHART_NAME: blockchain-etl-streaming
-  _HELM_REPO_NAME: baas-gke-dev
   _ARTIFACT_FILENAME: blockchain-etl-streaming-chart-version
-
+  _HELM_REPO_NAME: blockchain-k8s
+  _HELM_REPO_URL: gs://blockchain-k8s/charts
+  _ARTIFACT_URL: gs://artifacts-/versions/
 options:
   env:
-    - CLOUDSDK_COMPUTE_ZONE=us-central1-b
-    - CLOUDSDK_CONTAINER_CLUSTER=baas0
+    - SKIP_CLUSTER_CONFIG=true
 
 artifacts:
   objects:

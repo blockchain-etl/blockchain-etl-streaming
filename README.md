@@ -1,7 +1,7 @@
 # Blockchain ETL Streaming
 
-Streams the following Ethereum entities to Pub/Sub using 
-[ethereum-etl stream](https://github.com/blockchain-etl/ethereum-etl#stream):
+Streams the following Ethereum entities to Pub/Sub or Postgres using 
+[ethereum-etl stream](https://github.com/blockchain-etl/ethereum-etl/tree/develop/docs/commands.md#stream):
 
 - blocks
 - transactions
@@ -43,32 +43,27 @@ gcloud container clusters get-credentials ethereum-etl-streaming \
 --zone us-central1-a
 ```
 
-3. Create Pub/Sub topics (use `create_pubsub_topics_ethereum.sh`)
+3. Create Pub/Sub topics (use `create_pubsub_topics_ethereum.sh`). Skip this step if you need to stream to Postgres.
   - "crypto_ethereum.blocks" 
   - "crypto_ethereum.transactions" 
   - "crypto_ethereum.token_transfers" 
   - "crypto_ethereum.logs" 
   - "crypto_ethereum.traces" 
-  - "crypto_ethereum.contracts" 
+  - "crypto_ethereum.contracts"
   - "crypto_ethereum.tokens" 
-
-Put the prefix to `ethereum_base/configMap.yaml`, `PUB_SUB_TOPIC_PREFIX` property.
 
 4. Create GCS bucket. Upload a text file with block number you want to start streaming from to 
 `gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming/last_synced_block.txt`.
-Put your GCS path to `overlays/ethereum/block_data/configMap.yaml`, `GCS_PREFIX` property, 
-e.g. `gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming`.
-
-5. Update `ethereum_base/configMap.yaml`, `PROVIDER_URI` property to point to your Ethereum node.
 
 5. Create "ethereum-etl-app" service account with roles:
     - Pub/Sub Editor
     - Storage Object Admin
+    - Cloud SQL Client
 
 Download the key. Create a Kubernetes secret:
 
 ```bash
-kubectl create secret generic streaming-app-key --namespace eth --from-file=key.json=$HOME/Downloads/key.json
+kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downloads/key.json
 ```
 
 6. Install [helm] (https://github.com/helm/helm#install) 
@@ -94,9 +89,18 @@ helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming \
 --values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
 
 ``` 
-Ethereum block and trace data streaming are decoupled for higher reliability. 
+Ethereum block and trace data streaming are decoupled for higher reliability.
 
-9. Use `describe` command to troubleshoot, f.e. :
+To stream to Postgres:
+
+```bash
+helm install --name eth-postgres --namespace eth charts/blockchain-etl-streaming \ 
+--values values/ethereum/values-postgres.yaml
+``` 
+
+Refer to https://github.com/blockchain-etl/ethereum-etl-postgres for table schema and initial data load.
+
+9. Use `describe` command to troubleshoot, f.e.:
 
 ```bash
 kubectl describe pods -n btc

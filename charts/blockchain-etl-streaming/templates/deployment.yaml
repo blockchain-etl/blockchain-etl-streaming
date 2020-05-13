@@ -84,7 +84,7 @@ spec:
             - "stream"
             - "--provider-uri={{ .Values.config.PROVIDER_URI }}"
             - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
-            - "--output={{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
+            - "--output={{ .Values.config.STREAM_OUTPUT }}"
             - "--chain={{ .Values.config.CHAIN }}"
             - "--lag={{ .Values.config.LAG_BLOCKS }}"
             - "--max-workers={{ .Values.config.MAX_WORKERS }}"
@@ -96,7 +96,7 @@ spec:
             - "stream"
             - "--provider-uri={{ .Values.config.PROVIDER_URI }}"
             - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
-            - "--output={{ .Values.config.PUB_SUB_TOPIC_PREFIX }}"
+            - "--output={{ .Values.config.STREAM_OUTPUT }}"
             - "--lag={{ .Values.config.LAG_BLOCKS }}"
             - "--max-workers={{ .Values.config.MAX_WORKERS }}"
             - "--batch-size=10"
@@ -174,3 +174,23 @@ spec:
                 gsutil cp {{ .Values.lsb_path }}/{{ .Values.lsb_file }} ${GCS_PREFIX}/{{ .Values.lsb_file }}"
           resources:
             {{- toYaml .Values.init.resources | nindent 12 }}
+        {{- if .Values.cloudSqlProxy.enabled }}
+        - name: cloudsql-proxy
+          image: "{{ .Values.cloudSqlProxy.image.repository }}:{{ .Values.cloudSqlProxy.image.tag }}"
+          imagePullPolicy: {{ .Values.cloudSqlProxy.image.pullPolicy }}
+          command: ["/cloud_sql_proxy",
+                    "-instances={{ .Values.cloudSqlProxy.instanceConnectionName }}=tcp:{{ .Values.cloudSqlProxy.port }}",
+                    # If running on a VPC, the Cloud SQL proxy can connect via Private IP. See:
+                    # https://cloud.google.com/sql/docs/mysql/private-ip for more info.
+                    # "-ip_address_types=PRIVATE",
+                    "-credential_file=/var/secrets/google/key.json"]
+          securityContext:
+            runAsUser: 2  # non-root user
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: google-cloud-key
+              mountPath: /var/secrets/google
+              readOnly: true
+          resources:
+            {{- toYaml .Values.cloudSqlProxy.resources | nindent 12 }}
+        {{- end }}

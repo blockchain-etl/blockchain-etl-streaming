@@ -3,4 +3,4 @@ config:
   CHAIN: dash
   PROVIDER_URI: http://rpcuser:rpcpassword@dash0-service.dash-0.svc.cluster.local:8332
   GCS_PREFIX: gs://<YOUR_BUCKET_HERE>/dash-etl/streaming
-  PUB_SUB_TOPIC_PREFIX: projects/<YOUR_PROJECT_HERE>/topics/crypto_dash
+  STREAM_OUTPUT: projects/<YOUR_PROJECT_HERE>/topics/crypto_dash
