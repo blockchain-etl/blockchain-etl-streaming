@@ -21,7 +21,7 @@ pid_file: stream.pid
 init:
   image:
     repository: google/cloud-sdk
-    tag: 264.0.0-alpine
+    tag: 292.0.0-alpine
     pullPolicy: IfNotPresent
   resources:
     requests:
@@ -33,7 +33,7 @@ init:
 stream:
   image:
     repository: blockchainetl/bitcoin-etl
-    tag: 1.4.0-streaming
+    tag: 1.5.1-streaming
     pullPolicy: IfNotPresent
   resources:
     requests:
@@ -51,7 +51,7 @@ stream:
 upload:
   image:
     repository: google/cloud-sdk
-    tag: 264.0.0-alpine
+    tag: 292.0.0-alpine
     pullPolicy: IfNotPresent
   resources:
     requests:
