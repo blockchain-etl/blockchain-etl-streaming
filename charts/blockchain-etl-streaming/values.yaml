@@ -33,7 +33,7 @@ init:
 stream:
   image:
     repository: blockchainetl/bitcoin-etl
-    tag: 1.5.1-streaming
+    tag: 1.4.0-streaming
     pullPolicy: IfNotPresent
   resources:
     requests:
