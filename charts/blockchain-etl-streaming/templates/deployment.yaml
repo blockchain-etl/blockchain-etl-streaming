@@ -25,7 +25,7 @@ spec:
         rootEntitiType: {{ .Values.config.ROOT_ENTITY_TYPE }}
         {{- end }}
     spec:
-      terminationGracePeriodSeconds: 30
+      terminationGracePeriodSeconds: 60
       volumes:
         - name: google-cloud-key
           secret:
