@@ -88,7 +88,6 @@ helm install --name eth-blocks --namespace eth charts/blockchain-etl-streaming \
 helm install --name eth-traces --namespace eth charts/blockchain-etl-streaming \ 
 --values values/ethereum/values.yaml --values values/ethereum/trace_data/values.yaml 
 
-helm install --name eos-blocks --namespace eos charts/blockchain-etl-streaming --values values/eos/block_data/values.yaml
 ``` 
 Ethereum block and trace data streaming are decoupled for higher reliability.
 
