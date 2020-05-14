@@ -6,3 +6,4 @@ config:
   PROVIDER_URI: https://mainnet.infura.io
   ENTITY_TYPES: block,transaction,log,token_transfer
   LAG_BLOCKS: 18
+  CHAIN: null
