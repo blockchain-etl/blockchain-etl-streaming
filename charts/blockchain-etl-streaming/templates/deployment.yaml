@@ -169,7 +169,7 @@ spec:
                   - "while [ -f {{ .Values.lsb_path }}/{{ .Values.pid_file }} ]; do sleep 1; done;
                 gsutil cp {{ .Values.lsb_path }}/{{ .Values.lsb_file }} ${GCS_PREFIX}/{{ .Values.lsb_file }}"
           resources:
-            {{- toYaml .Values.init.resources | nindent 12 }}
+            {{- toYaml .Values.upload.resources | nindent 12 }}
         {{- if .Values.cloudSqlProxy.enabled }}
         - name: cloudsql-proxy
           image: "{{ .Values.cloudSqlProxy.image.repository }}:{{ .Values.cloudSqlProxy.image.tag }}"
