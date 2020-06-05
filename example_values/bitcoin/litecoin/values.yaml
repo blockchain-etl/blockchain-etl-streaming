@@ -4,3 +4,10 @@ config:
   PROVIDER_URI: http://rpcuser:rpcpassword@ltc0-service.ltc-0.svc.cluster.local:8332
   GCS_PREFIX: gs://<YOUR_BUCKET_HERE>/litecoin-etl/streaming
   STREAM_OUTPUT: projects/<YOUR_PROJECT_HERE>/topics/crypto_litecoin
+
+stream:
+  env:
+    LAST_SYNCED_BLOCK_FILE_MAX_AGE_IN_SECONDS: "2400"
+  livenessProbe:
+    initialDelaySeconds: "1200"
+    periodSeconds: "1200"
