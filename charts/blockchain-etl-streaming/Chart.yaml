@@ -2,4 +2,4 @@ apiVersion: v1
 appVersion: "1.5"
 description: A Helm chart to deploy multiple blockchain ETL streaming apps
 name: blockchain-etl-streaming
-version: 0.1.12
+version: 0.1.13
