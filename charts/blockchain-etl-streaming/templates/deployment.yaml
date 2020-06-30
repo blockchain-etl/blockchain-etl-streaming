@@ -140,7 +140,7 @@ spec:
           command:
             - sh
             - -c
-            - "apk add --no-cache tini && exec tini watch -n 60 gsutil cp {{ .Values.lsb_path }}/{{ .Values.lsb_file }} {{ .Values.config.GCS_PREFIX }}/{{ .Values.lsb_file }}"
+            - "apk add --no-cache tini && exec tini -e 143 watch -n 60 gsutil cp {{ .Values.lsb_path }}/{{ .Values.lsb_file }} {{ .Values.config.GCS_PREFIX }}/{{ .Values.lsb_file }}"
           volumeMounts:
             - name: google-cloud-key
               mountPath: /var/secrets/google
