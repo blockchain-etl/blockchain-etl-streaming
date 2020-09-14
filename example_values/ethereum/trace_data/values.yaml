@@ -3,4 +3,4 @@ config:
   STREAM_OUTPUT: projects/<YOUR_PROJECT_HERE>/topics/crypto_ethereum
   ROOT_ENTITY_TYPE: trace
   ENTITY_TYPES: trace,contract,token
-  GCS_PREFIX: gs://<YOUR_BUCKET_HERE>/ethereum-etl/streaming-trace
+  GCS_PREFIX: gs://<YOUR_BUCKET_HERE>/ethereum-etl/streaming
