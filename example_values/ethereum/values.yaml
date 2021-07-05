@@ -7,3 +7,4 @@ config:
   ENTITY_TYPES: block,transaction,log,token_transfer
   LAG_BLOCKS: 18
   CHAIN: null
+  CHAIN_TYPE: ethereum

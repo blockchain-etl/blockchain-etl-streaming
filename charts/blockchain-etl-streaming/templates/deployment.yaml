@@ -80,7 +80,7 @@ spec:
           image: "{{ .Values.stream.image.repository }}:{{ .Values.stream.image.tag }}"
           imagePullPolicy: {{ .Values.stream.image.pullPolicy }}
           args:
-            {{- if eq .Values.stream.image.repository "blockchainetl/bitcoin-etl" }}
+            {{- if eq .Values.config.CHAIN_TYPE "bitcoin" }}
             - "stream"
             - "--provider-uri={{ .Values.config.PROVIDER_URI }}"
             - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
@@ -92,7 +92,7 @@ spec:
             - "--block-batch-size=1"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
             {{- end }}
-            {{- if eq .Values.stream.image.repository "blockchainetl/ethereum-etl" }}
+            {{- if eq .Values.config.CHAIN_TYPE "ethereum" }}
             - "stream"
             - "--provider-uri={{ .Values.config.PROVIDER_URI }}"
             - "--last-synced-block-file={{ .Values.lsb_path }}/{{ .Values.lsb_file }}"
