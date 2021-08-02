@@ -1,9 +1,10 @@
 stream:
   image:
     repository: blockchainetl/ethereum-etl
-    tag: 1.5.1
+    tag: 1.7.0
 config:
   PROVIDER_URI: https://mainnet.infura.io/v3/<your_infura_project_key>
   ENTITY_TYPES: block,transaction,log,token_transfer
   LAG_BLOCKS: 18
   CHAIN: null
+  CHAIN_TYPE: ethereum
