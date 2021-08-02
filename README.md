@@ -53,7 +53,7 @@ gcloud container clusters get-credentials ethereum-etl-streaming \
   - "crypto_ethereum.tokens" 
 
 4. Create GCS bucket. Upload a text file with block number you want to start streaming from to 
-`gs:/<YOUR_BUCKET_HERE>/ethereum-etl/streaming/last_synced_block.txt`.
+`gs://<YOUR_BUCKET_HERE>/ethereum-etl/streaming/last_synced_block.txt`.
 
 5. Create "ethereum-etl-app" service account with roles:
     - Pub/Sub Editor
@@ -63,7 +63,7 @@ gcloud container clusters get-credentials ethereum-etl-streaming \
 Download the key. Create a Kubernetes secret:
 
 ```bash
-kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downloads/key.json
+kubectl create secret generic streaming-app-key --from-file=key.json=$HOME/Downloads/key.json -n eth
 ```
 
 6. Install [helm] (https://github.com/helm/helm#install) 

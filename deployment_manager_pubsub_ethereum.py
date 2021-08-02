@@ -37,3 +37,8 @@ def GenerateConfig(context):
             })
 
     return {'resources': resources}
+
+
+if __name__ == '__main__':
+    res = GenerateConfig(None)
+    print(res)
