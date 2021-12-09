@@ -101,6 +101,7 @@ spec:
             - "--max-workers={{ .Values.config.MAX_WORKERS }}"
             - "--batch-size=10"
             - "--block-batch-size=1"
+            - "--period-seconds=2"
             - "--entity-types={{ .Values.config.ENTITY_TYPES }}"
             - "--pid-file={{ .Values.lsb_path }}/{{ .Values.pid_file }}"
             {{- end }}
